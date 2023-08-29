@@ -25,7 +25,7 @@ function Login({navigation}) {
 
     // 아이디 유효성 검사
     const handleID = () => {
-        const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,}$/;
+        const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
         if (regex.test(id)) {
             setIDValid(true);
             setIDmsg("");
@@ -48,38 +48,20 @@ function Login({navigation}) {
         }
     }
 
-    // 아이디 중복 검사
-    const ConfirmID = async() => {
-        alert(id)
-        try {
-            const csrfToken = window.csrfToken;
-        console.log("try!")
-        const res = await axios.post(
-            '#', 
-            {
-                username: id,
-                password: pw,
-                'X-CSRFToken': csrfToken
-            },
-        );
-        } catch (e) {
-            console.error(e);
-        }
-    }
-
     // 로그인 버튼 클릭 시
     const Login = async() => {
         try {
-            const csrfToken = window.csrfToken;
-        console.log("try!")
-        const res = await axios.post(
-            '#', 
-            {
-                username: id,
-                password: pw,
-                'X-CSRFToken': csrfToken
-            },
-        );
+        // const csrfToken = window.csrfToken;
+
+        // const res = await axios.post(
+        //     '#', 
+        //     {
+        //         username: id,
+        //         password: pw,
+        //         'X-CSRFToken': csrfToken
+        //     },
+        // );
+        navigation.navigate('Home')
         } catch (e) {
             console.error(e);
         }
@@ -107,11 +89,6 @@ function Login({navigation}) {
                         // onChange={handleID}
                         value={id}
                     />
-                    <TouchableOpacity
-                        style={styles.confirmbuttonbox}
-                        onPress={ConfirmID}>
-                        <Text style={{fontSize: 15, color: "#fff"}}> 중복 검사 </Text>    
-                    </TouchableOpacity>
                 </View>
                 { !IDValid && id.length > 0 && (
                     <Text style={{
@@ -123,11 +100,11 @@ function Login({navigation}) {
                 <View style={{
                             display: "flex", flexDirection: "row", 
                             justifyContent: "center", alignItems: "center",
-                            marginBottom: 20,}}>
+                            marginBottom: 10,}}>
                     <TextInput                
-                        style={styles.pwinput}
+                        style={styles.input}
                         onChangeText={setPW}
-                        // onChange={handlePW}
+                        secureTextEntry={true}
                         value={pw}
                     />
                 </View>
@@ -150,7 +127,8 @@ function Login({navigation}) {
             <View style={styles.case3}>
                 <TouchableOpacity   
                     style={styles.buttonContainer}
-                    onPress={() => navigation.navigate('Login')}>
+                    onPress={Login}
+                    disabled={!Allow}>
                     <Text style={styles.buttonText}> 로그인 </Text>    
                 </TouchableOpacity>
             </View>
@@ -161,7 +139,6 @@ function Login({navigation}) {
                     <Text style={{fontSize: 15, color: "#9046CF"}}> 회원가입 </Text>    
                 </TouchableOpacity>
             </View>
-
         </View>
         </>
     );
@@ -190,15 +167,6 @@ const styles = StyleSheet.create({
         fontSize: 18
     },
     input: {
-        width: "65%",
-        height: 50,
-        borderWidth: 1,
-        padding: 10,
-        marginRight: 10,
-        borderColor: "#9046CF",
-        borderRadius: 8
-    },
-    pwinput: {
         width: "83%",
         height: 50,
         borderWidth: 1,
