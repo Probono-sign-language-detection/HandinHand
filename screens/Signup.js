@@ -106,8 +106,10 @@ function Signup({navigation}) {
         // const res = await axios.post(
         //     '#', 
         //     {
-        //         username: id,
+        //         username: user,
+        //         id: id,
         //         password: pw,
+        //         
         //         'X-CSRFToken': csrfToken
         //     },
         // );
