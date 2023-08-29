@@ -2,6 +2,9 @@ import * as React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet } from 'react-native';
+import Home from '../screens/Home';
+import New from '../screens/New';
+import Profile from '../screens/Profile';
 
 const Nav = createBottomTabNavigator();
 

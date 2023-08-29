@@ -1,15 +1,24 @@
 import React from "react";
 import {Text, Button, Image, TouchableOpacity, View, StyleSheet} from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
+import History from "../components/History";
 
 function Home({navigation}) {
     return (
         <>
         <View style={styles.container}>
-            <View>
+            <View style={styles.case1}>
                 <Text 
                     style={styles.title}>hi</Text>
             </View>
-
+            <View style={styles.case2}>
+                <History />
+            </View>
+            <View style={styles.case3}>
+                <Text 
+                    style={styles.msg}>대화를 시작해보세요</Text>
+                    <AntDesign name="arrowdown" size={24} color="#979797" />
+            </View>
         </View>
         </>
 
@@ -20,19 +29,24 @@ function Home({navigation}) {
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor: '#E4E4E4'
     },
-    buttonContainer:{
-        backgroundColor: 'black',
-        borderRadius: 5,
-        padding: 10,
-        margin: 20
-        },
-    buttonTest:{
+    case1: {
+        flex: 1,
+    },
+    case2: {
+        flex: 5,
+    },
+    case3: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+    },
+    msg: {
         fontSize: 20,
-        color: '#fff'
+        color: "#979797",
+        marginBottom: 10
     }
 })
 
