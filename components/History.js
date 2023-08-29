@@ -5,7 +5,14 @@ function History({navigation}) {
     return (
         <>
         <View style={styles.container}>
-            <Text>history</Text>
+            <View style={styles.case1}>
+                <Text style={styles.header}>대화 기록</Text>
+            </View>
+            <View style={styles.case2}>
+                <View style={styles.box}>
+                    <Text style={styles.msg}>아직 대화 기록이 없습니다!</Text>
+                </View>
+            </View>
         </View>
         </>
 
@@ -18,18 +25,35 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#ebebeb'
+        backgroundColor: '#E4E4E4'
     },
-    buttonContainer:{
-        backgroundColor: 'black',
-        borderRadius: 5,
-        padding: 10,
-        margin: 20
-        },
-    buttonTest:{
-        fontSize: 20,
-        color: '#fff'
+    header: {
+        fontSize: 35,
+        fontWeight: "bold",
+        marginLeft: 30
+    },
+    case1: {
+        width: "90%",
+        flex: 1,
+        justifyContent: "center",
+    },
+    case2: {
+        flex: 5,
+    },
+    msg: {
+        fontSize: 15,
+        color: "#979797",
+    },
+    box: {
+        width: 290,
+        height: 120,
+        borderColor: "#DADADA",
+        borderWidth: "1",
+        borderRadius: 8,
+        justifyContent: "center",
+        alignItems: "center"
     }
+
 })
 
 export default History

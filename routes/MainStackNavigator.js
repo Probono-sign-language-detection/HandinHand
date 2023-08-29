@@ -4,7 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Login from "../screens/Login";
 import Signup from "../screens/Signup"
 import Start from "../screens/Start";
-import RealTimeImg from '../screens/Camera';
+import RealTimeImg from '../screens/RealTimeImg';
 import TabRouter from "../screens/TabRouter";
 
 const Stack = createStackNavigator();

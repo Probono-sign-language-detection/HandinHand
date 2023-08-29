@@ -8,8 +8,7 @@ function Home({navigation}) {
         <>
         <View style={styles.container}>
             <View style={styles.case1}>
-                <Text 
-                    style={styles.title}>hi</Text>
+                <Text>hi</Text>
             </View>
             <View style={styles.case2}>
                 <History />
