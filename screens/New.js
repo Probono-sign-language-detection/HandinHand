@@ -2,62 +2,74 @@ import React, { useEffect, useState } from "react";
 import {Text, Button, Image, TouchableOpacity, View, StyleSheet} from 'react-native';
 
 function New({navigation}) {
-    const top = [
-        `나의 언어를\n선택해주세요`,
-        `상대방의 언어를{"\n"}선택해주세요`
+
+    const myData = [
+        {id: 1, kor: "한국어 수어", eng: "Korean Sign Language"}, 
+        {id: 2, kor: "영어 수어", eng: "English Sign Language"}, 
+        {id: 3, kor: "한국어", eng: "Korean"}, 
+        {id: 4, kor: "영어", eng: "English"}, 
     ]
 
-    const Btn = {
-        kor: ["한국어 수어", "한국어"],
-        korsub: ["Korean Sign Language", "Korean"],
-        eng: ["영어 수어", "영어"],
-        engsub: ["English Sign Language", "English"]
-    }
-
+    const yourData = [
+        {id: 1, kor: "한국어 수어", eng: "Korean Sign Language"}, 
+        {id: 2, kor: "영어 수어", eng: "English Sign Language"}, 
+    ]
+    
     const [pick, setPick] = useState([])
 
-    const [i, setI] = useState(0)
-    const onPress = () => {
-        setI((prev) => prev + 1)
-        if(i==2) {
-            setI(0)
-            setPick([])
-            navigation.navigate("RealTimeImg")
+    const [page, setPage] = useState("my")
+
+    const onPress = (value) => {
+        if(page === "my") {
+            setPage("your")
+            setPick((prevPick) => [...prevPick, value]);
+        } else if (page === "your") {
+            setPick((prevPick) => [...prevPick, value]);
+            navigation.navigate("RealTimeImg", {pick})
         }
     }
-    // useEffect(() => {
-    //     alert(i)
-    // }, i)
 
     return (
-        <>
         <View style={styles.container}>
+            { page === "my" ? (
             <View style={styles.case1}>
-                <Text style={styles.title}>{top[0]}</Text>
+                <Text style={styles.title}>{`나의 언어를\n선택해주세요`}</Text>
             </View>
+            ) : (
+            <View style={styles.case1}>
+                <Text style={styles.title}>{`상대방의 언어를\n선택해주세요`}</Text>
+            </View>
+            )}
+            { page === "my" ? (
             <View style={styles.case2}>
-                <TouchableOpacity
-                    style={styles.buttonContainer}
-                    onPress={() => {
-                        onPress()
-                        setPick(pick => [...pick, Btn.eng[i]])
-                    }}>
-                    <Text style={styles.buttonTitle}>{Btn.kor[i]}</Text> 
-                    <Text style={styles.sub}>{Btn.korsub[i]}</Text>   
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.buttonContainer}
-                    onPress={() => {
-                        onPress()
-                        setPick(pick => [...pick, Btn.eng[i]])
-                    }}>
-                    <Text style={styles.buttonTitle}>{Btn.eng[i]}</Text> 
-                    <Text style={styles.sub}>{Btn.engsub[i]}</Text>   
-                </TouchableOpacity>
+                {myData.map((item, i) => (
+                    <TouchableOpacity
+                        key={i}
+                        style={styles.buttonContainer}
+                        onPress={() => {
+                            onPress(item.kor)
+                        }}>
+                        <Text style={styles.buttonTitle}>{item.kor}</Text> 
+                        <Text style={styles.sub}>{item.eng}</Text>   
+                    </TouchableOpacity>
+                ))}
             </View>
+            ) : (
+            <View style={styles.case2}>
+                {yourData.map((item, i) => (
+                    <TouchableOpacity
+                        key={i}
+                        style={styles.buttonContainer}
+                        onPress={() => {
+                            onPress(item.kor)
+                        }}>
+                        <Text style={styles.buttonTitle}>{item.kor}</Text> 
+                        <Text style={styles.sub}>{item.eng}</Text>   
+                    </TouchableOpacity>
+                ))}
+            </View>
+            )}
         </View>
-        </>
-
     );
 }
 
@@ -75,12 +87,14 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     case2: {
-        flex: 3,
+        flex: 3.4,
         marginTop: 50
     },
     title: {
         fontSize: 35,
         textAlign: "center",
+        lineHeight: "50%",
+        fontWeight: "bold"
     },
     buttonTitle:{
         fontSize: 25,
@@ -97,7 +111,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#9046CF',
         borderRadius: 20,
         padding: 20,
-        margin: 20,
+        margin: 10,
         width: 270,
         height: 80,
         justifyContent: "center",

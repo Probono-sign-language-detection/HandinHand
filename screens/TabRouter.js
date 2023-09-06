@@ -1,9 +1,9 @@
 import React from "react";
-import MainStackNavigator from "../routes/MainStackNavigator";
+import MainTabNavigator from "../routes/MainTabNavigator";
 
 
 const TabRouter = () => {
-  return <MainStackNavigator />
+  return <MainTabNavigator />
 }
 
 export default TabRouter;

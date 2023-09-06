@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import { StyleSheet, Text, View, Button, Image, TouchableOpacity } from 'react-native';
 import { Camera } from 'expo-camera';
 import axios from 'axios';
-import base64 from 'react-native-base64'
+import imageCompression from 'browser-image-compression';
 import * as FileSystem from 'expo-file-system';
 
 
@@ -34,18 +34,25 @@ function RealTimeImg({navigation}) {
           const audioStatus = await Camera.requestMicrophonePermissionsAsync();
           setHasAudioPermission(audioStatus.status === 'granted');
       })();
-    }, []);
+    }, []);    
 
     const captureAndSendFrame = async () => {
+
+      // 이미지 resize 옵션 설정
+      const options = { 
+        maxSizeMB: 2, 
+        maxWidthOrHeight: 100
+      }
+
       if (camera) {
         try {
           const photo = await camera.takePictureAsync({ format: 'jpeg' });
-          console.log("--- Captured frame:", photo.uri);
-          setFirstCapturedFrameUri(photo.uri);
+          const compressedFile = await imageCompression(photo.uri, options);
+          setFirstCapturedFrameUri(compressedFile);
           setIsFirstFrameDisplayed(true);
           
           // 이미지 파일을 base64로 인코딩
-          const base64Image = await convertToBase64(photo.uri);
+          const base64Image = await convertToBase64(compressedFile);
 
           // 이미지를 base64로 인코딩하는 함수
           async function convertToBase64(uri) {

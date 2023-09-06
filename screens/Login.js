@@ -2,6 +2,11 @@ import React, { useCallback, useState, useEffect } from "react";
 import {Text, Button, Image, TouchableOpacity, View, StyleSheet, TextInput, SectionList} from 'react-native';
 import MainTabNavigator from "../routes/MainTabNavigator";
 
+const user = {
+    id: "test1234",
+    pw: "asdf1234!"
+}
+
 function Login({navigation}) {
     const [id, setID] = useState("");
     const [pw, setPW] = useState("");
@@ -50,19 +55,13 @@ function Login({navigation}) {
     }
 
     // 로그인 버튼 클릭 시
-    const Login = async() => {
+    const Login = () => {
         try {
-        // const csrfToken = window.csrfToken;
-
-        // const res = await axios.post(
-        //     '#', 
-        //     {
-        //         username: id,
-        //         password: pw,
-        //         'X-CSRFToken': csrfToken
-        //     },
-        // );
-        navigation.navigate('TabRouter');
+        if(id === user.id && pw === user.pw) {
+            navigation.navigate('TabRouter');
+        } else {
+            alert("아이디 혹은 비밀번호가 틀렸습니다!")
+        }
         } catch (e) {
             console.error(e);
         }

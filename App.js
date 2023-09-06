@@ -4,7 +4,7 @@ import MainTabNavigator from "./routes/MainTabNavigator";
 
 
 const App = () => {
-  return <MainTabNavigator />
+  return <MainStackNavigator />
 }
 
 export default App;

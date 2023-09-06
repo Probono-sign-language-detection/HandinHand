@@ -61,14 +61,14 @@ function Signup({navigation}) {
         try {
             const csrfToken = window.csrfToken;
         console.log("try!")
-        const res = await axios.post(
-            '#', 
-            {
-                username: id,
-                password: pw,
-                'X-CSRFToken': csrfToken
-            },
-        );
+        // const res = await axios.post(
+        //     '#', 
+        //     {
+        //         username: id,
+        //         password: pw,
+        //         'X-CSRFToken': csrfToken
+        //     },
+        // );
         } catch (e) {
             console.error(e);
         }
@@ -99,7 +99,7 @@ function Signup({navigation}) {
     }
 
     // 로그인 버튼 클릭 시
-    const Signup = async() => {
+    const Signup = () => {
         try {
         // const csrfToken = window.csrfToken;
 
@@ -113,7 +113,7 @@ function Signup({navigation}) {
         //         'X-CSRFToken': csrfToken
         //     },
         // );
-        navigation.navigate('Home')
+        navigation.navigate('Login')
         } catch (e) {
             console.error(e);
         }
