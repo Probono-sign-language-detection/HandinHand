@@ -11,8 +11,8 @@ function New({navigation}) {
     ]
 
     const yourData = [
-        {id: 1, kor: "한국어 수어", eng: "Korean Sign Language"}, 
-        {id: 2, kor: "영어 수어", eng: "English Sign Language"}, 
+        {id: 1, kor: "한국어", eng: "Korean"}, 
+        {id: 2, kor: "영어", eng: "English"}, 
     ]
     
     const [pick, setPick] = useState([])
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 35,
         textAlign: "center",
-        lineHeight: "50%",
+        lineHeight: 50,
         fontWeight: "bold"
     },
     buttonTitle:{

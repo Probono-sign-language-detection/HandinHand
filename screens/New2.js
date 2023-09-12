@@ -8,10 +8,10 @@ function New2({navigation}) {
     ]
 
     const Btn = {
-        kor: ["한국어 수어", "한국어"],
-        korsub: ["Korean Sign Language", "Korean"],
-        eng: ["영어 수어", "영어"],
-        engsub: ["English Sign Language", "English"]
+        kor: ["한국어", "한국어 수어"],
+        korsub: ["Korean", "Korean Sign Language"],
+        eng: ["영어", "영어 수어"],
+        engsub: ["English", "English Sign Language"]
     }
 
     const [pick, setPick] = useState([])

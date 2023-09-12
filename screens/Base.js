@@ -1,12 +1,14 @@
 import React, {useState, useEffect, useRef} from 'react';
-import { StyleSheet, Text, View, Button, Image, TouchableOpacity } from 'react-native';
-import { Camera } from 'expo-camera';
-import axios from 'axios';
-import imageCompression from 'browser-image-compression';
-import * as FileSystem from 'expo-file-system';
+  import { StyleSheet, Text, View, Button, Image } from 'react-native';
+  import { Camera } from 'expo-camera';
+  import axios from 'axios';
+  import base64 from 'react-native-base64'
+  import * as FileSystem from 'expo-file-system';
+  import ImageResizer from 'react-native-image-resizer';
 
 
-function RealTimeImg({navigation}) {
+
+  export default function Base() {
     //마이크 허가 요청
     const [hasAudioPermission, setHasAudioPermission] = useState(null);
     //카메라 허가 요청
@@ -23,9 +25,7 @@ function RealTimeImg({navigation}) {
     const [firstCapturedFrameUri, setFirstCapturedFrameUri] = useState(null);
     const [isFirstFrameDisplayed, setIsFirstFrameDisplayed] = useState(false);
 
-    // new에서 선택한 값 가져오기
-    // const { pick } = route.params;
-
+    
     useEffect(() => {
       (async () => {
           // 카메라 권한 요청
@@ -36,33 +36,27 @@ function RealTimeImg({navigation}) {
           const audioStatus = await Camera.requestMicrophonePermissionsAsync();
           setHasAudioPermission(audioStatus.status === 'granted');
       })();
-    }, []);    
+    }, []);
 
     const captureAndSendFrame = async () => {
-
-      // 이미지 resize 옵션 설정
-      const options = { 
-        maxSizeMB: 2, 
-        maxWidthOrHeight: 100
-      }
 
       if (camera) {
         try {
           const photo = await camera.takePictureAsync({ format: 'jpeg' });
-          // const compressedFile = await imageCompression(photo.uri, options);
-          setFirstCapturedFrameUri(photo);
+          
+          console.log("--- Captured frame:", photo.uri);
+          setFirstCapturedFrameUri(photo.uri);
           setIsFirstFrameDisplayed(true);
           
           // 이미지 파일을 base64로 인코딩
-          const base64Image = await convertToBase64(photo);
+          const base64Image = await convertToBase64(photo.uri);
 
           // 이미지를 base64로 인코딩하는 함수
           async function convertToBase64(uri) {
-            // const fileUri = uri.replace('file:///var/mobile/Containers/Data/Application/639', '');
             const b64 = await FileSystem.readAsStringAsync(uri, {
               encoding: FileSystem.EncodingType.Base64,
             });
-            
+
             // const b64 =base64.encode(fileUri)
 
             console.log("base64!!" + b64.substring(0, 100));
@@ -111,35 +105,24 @@ function RealTimeImg({navigation}) {
 
 
     return (
-        <>
+      <>
         <View style={{flex:1}}>
-          <View style={styles.top}>
-            <Text style={styles.textBox}>
-              hi
-            </Text>
-            <Text>
-              hi
-            </Text>
-          </View>
-
-          {/* 카메라 */}
           <View style={styles.cameraContainer} >
             <Camera
               ref = {ref => setCamera(ref)}
               style = {styles.fixedRatio}
               type = {type}
-              ratio = {'1:1'}
-            />
+              ratio = {'4:3'} />
           </View>
-          {/* 버튼 */}
-          <View styles={styles.buttons}>
-            {/* play, pause 버튼 */}
-            {/* <Button 
-              title = {status.isPlaying ? 'Pause' : 'Play'}
+            <View styles={styles.buttons}>
+
+              <Button 
+                title = {status.isPlaying ? 'Pause' : 'Play'}
                 onPress={() => 
                 status.isPlaying ? video.current.pauseAsync() : video.current.playAsync()
               }
-            /> */}
+              />
+            </View>
             <Button
             title = 'Flip Video'
             onPress={()=>{
@@ -152,38 +135,32 @@ function RealTimeImg({navigation}) {
             />
             <Button title="Take Video" onPress={()=>handleTakeVideo()} />
             <Button title="Stop Video" onPress={()=>handleStopVideo()} />
-            </View>
             {isFirstFrameDisplayed && (
               <View style={styles.box}>
               <Image
                   style={styles.capturedImage}
                   source={{ uri: firstCapturedFrameUri }}
               />
-            </View>
+              </View>
             )}
         </View>
       </>
     );
-}
+  }
 
-
-const styles = StyleSheet.create({
-    top: {
-      flex: 0.5,
-      justifyContent: 'center',
-      alignItems: "center",
-      flexDirection: "row"
-    },
-    textBox: {
-      backgroundColor: "blue"
-    }, 
+  const styles = StyleSheet.create({
     cameraContainer: {
+      flex: 1,
       flexDirection: 'row',
-      marginBottom: 50
     },
     fixedRatio: {
       flex: 1,
       aspectRatio: 1
+    },
+    video: {
+      alignSelf: 'center',
+      width: 350,
+      height: 350,
     },
     buttons: {
       flexDirection: 'row',
@@ -193,6 +170,7 @@ const styles = StyleSheet.create({
     capturedImage: {
       width: 200,
       height: 200,
+      resizeMode: 'contain',
       marginTop: 10,
     },
     box: {
@@ -200,8 +178,4 @@ const styles = StyleSheet.create({
       justifyContent: "center",
       alignItems: "center",
     }
-})
-
-
-export default RealTimeImg
-
+  })

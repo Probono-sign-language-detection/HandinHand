@@ -6,6 +6,8 @@ import Signup from "../screens/Signup"
 import Start from "../screens/Start";
 import RealTimeImg from '../screens/RealTimeImg';
 import TabRouter from "../screens/TabRouter";
+import Test from "../screens/Test";
+import Base from "../screens/Base";
 
 const Stack = createStackNavigator();
 
@@ -17,7 +19,7 @@ function MainStackNavigator() {
                 <Stack.Screen name="Login" component={Login} options={{headerShown: false}} />
                 <Stack.Screen name="Signup" component={Signup} options={{headerShown: false}} />
                 <Stack.Screen name="TabRouter" component={TabRouter} options={{headerShown: false}} />
-                <Stack.Screen name="RealTimeImg" component={RealTimeImg} options={{headerShown: false}} />
+                <Stack.Screen name="RealTimeImg" component={Test} options={{headerShown: false}} />
             </Stack.Navigator>
         </NavigationContainer>
     )
